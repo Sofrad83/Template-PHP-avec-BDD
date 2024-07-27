@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
 //Base de données
-$config = new DatabaseConfig('localhost', 'pvmp', 'root', '');
+$config = new DatabaseConfig();
 // Connexion à la base de données
 $dbConnection = new DatabaseConnection($config);
 // Récupération de l'objet PDO

@@ -7,11 +7,11 @@ class DatabaseConfig {
     private $username;
     private $password;
 
-    public function __construct($host, $dbname, $username, $password) {
-        $this->host = $host;
-        $this->dbname = $dbname;
-        $this->username = $username;
-        $this->password = $password;
+    public function __construct() {
+        $this->host = $_ENV['DB_HOST'];
+        $this->dbname = $_ENV['DB_NAME'];
+        $this->username = $_ENV['DB_USER'];
+        $this->password = $_ENV['DB_PASS'];
     }
 
     public function getHost() {
