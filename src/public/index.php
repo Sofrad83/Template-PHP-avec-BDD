@@ -1,24 +1,24 @@
 <?php
 
 use Slim\Factory\AppFactory;
-use Dotenv\Dotenv;
 
 require __DIR__ . '/../../vendor/autoload.php';
 
-//dotenv
+session_start();
 
-$dotenv = Dotenv::createImmutable(__DIR__. '/../../');
-$dotenv->load();
+if (!isset($_SESSION['initialized'])) {
+    // Initialiser les variables globales
+    $_SESSION['lang'] = 'fr';
+    
+    // Indiquer que les variables ont été initialisées
+    $_SESSION['initialized'] = true;
+}
 
 // Instantiate App
 $app = AppFactory::create();
 
 // Add error middleware
-if($_ENV["ENV"] == "dev"){
-    $app->addErrorMiddleware(true, true, true);
-}else{
-    $app->addErrorMiddleware(false, false, false);
-}
+$app->addErrorMiddleware(true, true, true);
 
 $loader = new \Twig\Loader\FilesystemLoader(__DIR__ . '/../templates/');
 $twig = new Twig\Environment($loader, [
