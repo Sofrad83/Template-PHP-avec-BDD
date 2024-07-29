@@ -1,8 +1,14 @@
 <?php
 
+use App\Support\Route;
 use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../../vendor/autoload.php';
+
+use Dotenv\Dotenv;
+
+$dotenv = Dotenv::createImmutable(__DIR__ . '/../../');
+$dotenv->load();
 
 session_start();
 
@@ -27,6 +33,8 @@ $twig = new Twig\Environment($loader, [
 ]);
 
 $twig->addExtension(new \Twig\Extension\DebugExtension());
+
+Route::init($app);
 
 //Liste des routes
 include_once(__DIR__ . '/../routes/app.php');

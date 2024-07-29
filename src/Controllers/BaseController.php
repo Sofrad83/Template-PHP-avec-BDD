@@ -7,15 +7,16 @@ class BaseController{
   public $data = [];
   public $status = 200;
   public $response;
-
+  public $dbQuery;
   public $json = false;
 
-  public function __construct($action, $request, $response){
+  public function __construct($action, $request, $response, $dbQuery){
     if (!method_exists($this, $action)){
       $this->template = "page404";
       $this->status = 404;
       return;
     }
+    $this->dbQuery = $dbQuery;
     $this->$action($request);
     if($this->json){
       $this->makeJson($response);
