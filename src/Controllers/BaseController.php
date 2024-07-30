@@ -9,6 +9,7 @@ class BaseController{
   public $response;
   public $dbQuery;
   public $json = false;
+  public $redirect = false;
 
   public function __construct($action, $request, $response, $dbQuery){
     if (!method_exists($this, $action)){
@@ -18,7 +19,9 @@ class BaseController{
     }
     $this->dbQuery = $dbQuery;
     $this->$action($request);
-    if($this->json){
+    if($this->redirect){
+      $this->makeRedirect($response);
+    }else if($this->json){
       $this->makeJson($response);
     }else{
       $this->makePage($response);
@@ -35,5 +38,9 @@ class BaseController{
   public function makeJson($response){
     $response->getBody()->write(json_encode($this->data));
     $this->response  = $response->withHeader('Content-Type', 'application/json');
+  }
+
+  public function makeRedirect($response){
+    $this->response = $response->withHeader('Location', $this->data['url'])->withStatus(302);
   }
 }
